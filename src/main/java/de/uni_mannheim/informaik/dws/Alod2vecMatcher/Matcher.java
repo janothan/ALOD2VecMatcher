@@ -72,6 +72,7 @@ public class Matcher extends LabelBasedMatcher
 
             // vector matcher here
 
+
             // scale confidence values
             scaleConfidenceValues(merged);
 

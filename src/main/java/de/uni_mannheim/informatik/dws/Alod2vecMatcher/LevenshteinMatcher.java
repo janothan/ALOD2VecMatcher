@@ -83,7 +83,7 @@ public class LevenshteinMatcher extends LabelBasedMatcher {
                         if (Math.abs(s1.label.length() - s2.label.length()) > allowedDifference) continue loop22;
                         if (isDamerauLevenshteinEqualOrLess(s1.label.toLowerCase(), s2.label.toLowerCase(), allowedDifference)) {
                             Map<String, Object> extensions = new HashMap<>();
-                            extensions.put(DefaultExtensions.DublinCore.DESCRIPTION.toString(), "Label '" + s1.label + "' of ontology 1 and label '" + s2.label + " of ontology 2 have a very similar writing.");
+                            extensions.put(DefaultExtensions.DublinCore.DESCRIPTION.toString(), "Label '" + s1.label + "' of ontology 1 and label '" + s2.label + "' of ontology 2 have a very similar writing.");
                             Correspondence newCorrespondence = new Correspondence(entry1.getKey(), entry2.getKey(), 1.0, CorrespondenceRelation.EQUIVALENCE, extensions);
                             alignment.add(newCorrespondence);
                             LOGGER.info("New correspondence: " + newCorrespondence);

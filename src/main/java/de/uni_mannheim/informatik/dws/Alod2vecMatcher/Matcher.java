@@ -1,9 +1,10 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.complexString.ComplexStringMatcher;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.DefaultNormalizationFunction;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleStringMatcher;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.TrimNormalizationFunction;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.KGvec2goVectors.VectorCosineMatcher;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.complexString.ComplexStringMatcher;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.DefaultNormalizationFunction;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleStringMatcher;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.TrimNormalizationFunction;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Correspondence;
 import org.apache.jena.ontology.OntModel;
@@ -13,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.Properties;
 
+/**
+ * Main entry point for the ALOD2Vec Matcher (orchestrating the matcher pipeline).
+ */
 public class Matcher extends LabelBasedMatcher
 {
     /**
@@ -26,6 +30,17 @@ public class Matcher extends LabelBasedMatcher
      * Default Logger
      */
     private static Logger LOGGER = LoggerFactory.getLogger(LabelBasedMatcher.class);
+
+    /**
+     * Threshold for the vector matcher.
+     */
+    private double vectorMatcherThreshold = 0.75;
+
+    /**
+     * If true, the vector matcher is not executed. This can be used to determine residual true positives in MELT.
+     * In such cases, the skip option can be enabled and the matcher can be used as baseline matcher.
+     */
+    private boolean skipVectorStep = false;
 
     /**
      * Constructor
@@ -71,7 +86,11 @@ public class Matcher extends LabelBasedMatcher
             merged = mergeAlignments(merged, lAlignment);
 
             // vector matcher here
-
+            VectorCosineMatcher vmatcher = new VectorCosineMatcher();
+            if(!skipVectorStep) {
+                vmatcher.setThreshold(vectorMatcherThreshold);
+                merged = vmatcher.match(ontology1, ontology2, alignment, properties);
+            }
 
             // scale confidence values
             scaleConfidenceValues(merged);
@@ -86,7 +105,6 @@ public class Matcher extends LabelBasedMatcher
             }
 
             return merged;
-
     }
 
 
@@ -114,7 +132,7 @@ public class Matcher extends LabelBasedMatcher
      * Merges the subdominant Alignment in the dominant alignment.
      * (Only the explanations from the dominant alignment will be kept.)
      * @param dominantAlignment Dominant (more important) alignment.
-     * @param subdominantAlignment Subdomainant (less important) alignment.
+     * @param subdominantAlignment Sub-domainant (less important) alignment.
      * @return Merged alignment.
      */
     private Alignment mergeAlignments(Alignment dominantAlignment, Alignment subdominantAlignment){
@@ -146,4 +164,19 @@ public class Matcher extends LabelBasedMatcher
         return size;
     }
 
+    public double getVectorMatcherThreshold() {
+        return vectorMatcherThreshold;
+    }
+
+    public void setVectorMatcherThreshold(double vectorMatcherThreshold) {
+        this.vectorMatcherThreshold = vectorMatcherThreshold;
+    }
+
+    public boolean isSkipVectorStep() {
+        return skipVectorStep;
+    }
+
+    public void setSkipVectorStep(boolean skipVectorStep) {
+        this.skipVectorStep = skipVectorStep;
+    }
 }

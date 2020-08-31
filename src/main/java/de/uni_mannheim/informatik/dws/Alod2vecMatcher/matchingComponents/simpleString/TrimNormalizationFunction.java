@@ -1,4 +1,4 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString;
 
 import java.util.function.Function;
 

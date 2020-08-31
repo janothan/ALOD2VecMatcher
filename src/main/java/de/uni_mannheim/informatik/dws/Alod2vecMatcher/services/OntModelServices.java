@@ -1,4 +1,4 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.services;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.services;
 
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.*;

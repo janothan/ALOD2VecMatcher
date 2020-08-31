@@ -1,7 +1,7 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Correspondence;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.CorrespondenceRelation;

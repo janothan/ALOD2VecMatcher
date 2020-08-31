@@ -1,8 +1,9 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.complexString;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.complexString;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.LabelBasedMatcher;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.LabelBasedMatcher;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.services.OntModelServices;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Correspondence;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.CorrespondenceRelation;
@@ -54,24 +55,36 @@ public class ComplexStringMatcher extends LabelBasedMatcher {
      */
     private void complexMatch(UriLabelInfo uriLabelMap_1, UriLabelInfo uriLabelMap_2, String what) {
 
+        // global data store key generation
+        String ont_1_key = OntModelServices.getOntId(ontology1);
+        String ont_2_key = OntModelServices.getOntId(ontology2);
+
         ComplexIndexer complexIndexer_1;
-        if(store.containsKey("simpleIndex_" + what + "_1")){
-        complexIndexer_1 = new ComplexIndexer((SimpleTransformationIndexer) store.get("simpleIndex_" + what + "_1"));
+        if(ont_1_key != null && store.containsKey("simpleIndex_" + ont_1_key + "_" + what + "_1")){
+            complexIndexer_1 = new ComplexIndexer((SimpleTransformationIndexer) store.get("simpleIndex_" + ont_1_key + "_" + what + "_1"));
         } else {
             complexIndexer_1 = new ComplexIndexer(uriLabelMap_1);
         }
 
         ComplexIndexer complexIndexer_2;
-        if(store.containsKey("simpleIndex_" + what + "_2")){
-            complexIndexer_2 = new ComplexIndexer((SimpleTransformationIndexer) store.get("simpleIndex_" + what + "_2"));
+        if(ont_2_key != null && store.containsKey("simpleIndex_" + ont_2_key + "_" + what + "_2")){
+            complexIndexer_2 = new ComplexIndexer((SimpleTransformationIndexer) store.get("simpleIndex_" + ont_2_key + "_" + what + "_2"));
         } else {
             complexIndexer_2 = new ComplexIndexer(uriLabelMap_2);
         }
 
         HashMap<BagOfWords, ArrayList<String>> simpleIndex_1 = complexIndexer_1.index;
-        HashMap<BagOfWords,  ArrayList<String>> simpleIndex_2 = complexIndexer_2.index;
+        HashMap<BagOfWords, ArrayList<String>> simpleIndex_2 = complexIndexer_2.index;
 
+        // put to store
+        if(ont_1_key != null && ont_2_key != null) {
+            String complexIndexKey_1 = "complexIndexer_" + ont_1_key + "_" + what + "_1";
+            store.put(complexIndexKey_1, simpleIndex_1);
+            String complexIndexKey_2 = "complexIndexer_" + ont_2_key + "_" + what + "_2";
+            store.put(complexIndexKey_2, simpleIndex_2);
+        }
 
+        // apply actual matching operation
         for (BagOfWords bow : simpleIndex_1.keySet()) {
             if (simpleIndex_2.containsKey(bow)) {
                 for(String sourceUri : simpleIndex_1.get(bow)){

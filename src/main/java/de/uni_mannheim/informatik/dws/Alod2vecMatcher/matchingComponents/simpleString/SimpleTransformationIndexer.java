@@ -1,8 +1,8 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString;
 
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

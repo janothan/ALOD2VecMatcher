@@ -1,13 +1,14 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.Language;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.services.OntModelServices;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.services.StringOperations;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.Language;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.services.OntModelServices;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.services.StringOperations;
 import de.uni_mannheim.informatik.dws.melt.matching_base.DataStore;
 import de.uni_mannheim.informatik.dws.melt.matching_jena.MatcherYAAAJena;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
+import eu.sealsproject.platform.res.domain.omt.IOntologyMatchingToolBridge;
 import org.apache.jena.ontology.AnnotationProperty;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class LabelBasedMatcher extends MatcherYAAAJena {
+public abstract class LabelBasedMatcher extends MatcherYAAAJena implements IOntologyMatchingToolBridge {
 
     /**
      * Logger

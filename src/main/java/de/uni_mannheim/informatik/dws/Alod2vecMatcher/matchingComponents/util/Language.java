@@ -1,4 +1,4 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

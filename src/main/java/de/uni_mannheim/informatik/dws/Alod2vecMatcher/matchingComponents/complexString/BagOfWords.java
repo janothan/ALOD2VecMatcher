@@ -1,4 +1,4 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.complexString;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.complexString;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,6 @@ public class BagOfWords extends ArrayList<String> {
      * IMPORTANT: MAKE VOLATILE IFF USED IN MULTI THREAD ENVIRONMENT.
      */
     private int hashCode = -1;
-
 
     /**
      * Constructor
@@ -28,7 +27,7 @@ public class BagOfWords extends ArrayList<String> {
     /**
      * Two BagOfWords qualify as the same object if they contain the same objects.
      * The order of elements does not matter.
-     * @param o
+     * @param o Object to compare to.
      * @return
      */
     @Override

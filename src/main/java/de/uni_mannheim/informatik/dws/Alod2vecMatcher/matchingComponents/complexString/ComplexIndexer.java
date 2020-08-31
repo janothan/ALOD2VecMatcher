@@ -1,9 +1,9 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.complexString;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.complexString;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.services.StringOperations;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.services.StringOperations;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -17,7 +17,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- mandatory: this class has to implement IOntologyMatchingToolBridge -->
-        <oaei.mainClass>de.uni_mannheim.informatik.dws.WiktionaryMatcher.OrchestratingMatcher</oaei.mainClass>
+        <oaei.mainClass>de.uni_mannheim.informatik.dws.Alod2vecMatcher.Matcher</oaei.mainClass>
 
         <oaei.copyright>(C) Jan Portisch, 2020
         </oaei.copyright> <!--optional copyright appearing in the seals descriptor file -->
@@ -41,6 +41,13 @@
         <dependency>
             <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
             <artifactId>matching-jena</artifactId>
+            <version>${matching.version}</version>
+        </dependency>
+
+        <!-- dependency for kgvec2go -->
+        <dependency>
+            <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
+            <artifactId>matching-ml</artifactId>
             <version>${matching.version}</version>
         </dependency>
 
@@ -74,6 +81,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.3.0-M1</version>
@@ -90,18 +103,6 @@
             <groupId>com.github.mpkorstanje</groupId>
             <artifactId>simmetrics-core</artifactId>
             <version>4.1.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mapdb</groupId>
-            <artifactId>mapdb</artifactId>
-            <version>3.0.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.jena</groupId>
-            <artifactId>jena-tdb2</artifactId>
-            <version>3.16.0</version>
         </dependency>
 
     </dependencies>
@@ -133,11 +134,11 @@
                         2) "seals_all_deps" - adds all dependencies of your project (please note that this can cause
                         problems when using jena for example)
                         3) "seals_external" - creates a wrapper around the matcher so that no inference with seals
-                        happens(the matcher has to log to std err only).
+                        happens (the matcher has to log to std err only).
                         -->
                         <configuration>
                             <descriptorRefs>
-                                <descriptorRef>seals</descriptorRef>
+                                <descriptorRef>seals_external</descriptorRef>
                             </descriptorRefs>
                         </configuration>
                     </execution>

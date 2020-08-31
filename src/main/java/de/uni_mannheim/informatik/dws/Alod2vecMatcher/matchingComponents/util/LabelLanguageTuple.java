@@ -1,4 +1,4 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util;
 
 /**
  * Data structure to hold label together with the language.

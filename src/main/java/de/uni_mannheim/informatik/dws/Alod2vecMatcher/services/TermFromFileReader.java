@@ -1,4 +1,4 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.services;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.services;
 
 import java.io.*;
 import java.util.HashSet;

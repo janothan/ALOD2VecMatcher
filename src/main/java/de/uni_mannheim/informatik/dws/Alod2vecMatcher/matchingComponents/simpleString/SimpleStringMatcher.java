@@ -1,8 +1,8 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.LabelBasedMatcher;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.services.OntModelServices;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.LabelBasedMatcher;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.services.OntModelServices;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Correspondence;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.CorrespondenceRelation;
@@ -83,6 +83,10 @@ public class SimpleStringMatcher extends LabelBasedMatcher {
 
         // check for key validity (global store can only be used if unique ont ids exist
         if(ont_1_key == null || ont_2_key == null){
+            // do not use the global store
+            indexer_1 = new SimpleTransformationIndexer(uriLabelMap_1, transformationFunction);
+            indexer_2 = new SimpleTransformationIndexer(uriLabelMap_2, transformationFunction);
+        } else {
             String indexer_1_key = "simpleIndex_" + ont_1_key + "_" + what + "_1";
             String indexer_2_key = "simpleIndex_" + ont_2_key + "_" + what + "_2";
             if(store.containsKey(indexer_1_key)){
@@ -98,10 +102,6 @@ public class SimpleStringMatcher extends LabelBasedMatcher {
             // adding to the store
             store.put(indexer_1_key, indexer_1);
             store.put(indexer_2_key, indexer_2);
-        } else {
-            // do not use the global store
-            indexer_1 = new SimpleTransformationIndexer(uriLabelMap_1, transformationFunction);
-            indexer_2 = new SimpleTransformationIndexer(uriLabelMap_2, transformationFunction);
         }
 
         HashMap<String, ArrayList<String>> simpleIndex_1 = indexer_1.index;

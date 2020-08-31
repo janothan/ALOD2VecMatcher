@@ -1,9 +1,9 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.DefaultNormalizationFunction;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.simpleString.TrimNormalizationFunction;
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.DefaultNormalizationFunction;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.TrimNormalizationFunction;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
 import de.uni_mannheim.informatik.dws.melt.matching_eval.ResourceType;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Correspondence;
@@ -24,7 +24,6 @@ import java.util.*;
  * Instance Matcher for the knowledge graph track.
  */
 public class SimpleInstanceMatcher extends LabelBasedMatcher {
-
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SimpleInstanceMatcher.class);
 

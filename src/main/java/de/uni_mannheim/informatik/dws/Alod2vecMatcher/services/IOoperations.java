@@ -1,6 +1,6 @@
-package de.uni_mannheim.informaik.dws.Alod2vecMatcher.services;
+package de.uni_mannheim.informatik.dws.Alod2vecMatcher.services;
 
-import de.uni_mannheim.informaik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
+import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.LabelLanguageTuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

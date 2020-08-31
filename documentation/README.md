@@ -1,0 +1,1 @@
+Documentary material such as class diagrams or architectural diagrams. 

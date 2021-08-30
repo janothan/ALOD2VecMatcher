@@ -4,7 +4,7 @@ import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleS
 import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.SimpleTransformationIndexer;
 import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.simpleString.TrimNormalizationFunction;
 import de.uni_mannheim.informatik.dws.Alod2vecMatcher.matchingComponents.util.UriLabelInfo;
-import de.uni_mannheim.informatik.dws.melt.matching_eval.ResourceType;
+import de.uni_mannheim.informatik.dws.melt.matching_jena_matchers.filter.ConceptType;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Alignment;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.Correspondence;
 import de.uni_mannheim.informatik.dws.melt.yet_another_alignment_api.CorrespondenceRelation;
@@ -38,10 +38,10 @@ public class SimpleInstanceMatcher extends LabelBasedMatcher {
         nextCorrespondence:
         for(Correspondence correspondence : alignment) {
             ResIterator iterator1 = null, iterator2 = null;
-            if(ResourceType.analyze(ontology1, correspondence.getEntityOne()) == ResourceType.CLASS ) {
+            if(ConceptType.analyze(ontology1, correspondence.getEntityOne()) == ConceptType.CLASS ) {
                 iterator1 = ontology1.listSubjectsWithProperty(RDF.type, ontology1.getRDFNode(NodeFactory.createURI(correspondence.getEntityOne())));
             }
-            if(ResourceType.analyze(ontology2, correspondence.getEntityTwo()) == ResourceType.CLASS ) {
+            if(ConceptType.analyze(ontology2, correspondence.getEntityTwo()) == ConceptType.CLASS ) {
                 iterator2 = ontology2.listSubjectsWithProperty(RDF.type, ontology2.getRDFNode(NodeFactory.createURI(correspondence.getEntityTwo())));
             }
 

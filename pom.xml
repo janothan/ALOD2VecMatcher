@@ -8,8 +8,7 @@
     <version>1.0-SNAPSHOT</version><!-- description appearing in descriptor file of seals package and system.ttl file in hobbit -->
 
     <packaging>jar</packaging>
-    <description>WiktionaryMatcher uses Wiktionary to match ontologies.
-    </description>
+    <description>ALOD2Vec Matcher uses RDF2Vec embeddings of the WebIsALOD dataset for ontology matching.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,14 +18,9 @@
         <!-- mandatory: this class has to implement IOntologyMatchingToolBridge -->
         <oaei.mainClass>de.uni_mannheim.informatik.dws.Alod2vecMatcher.Matcher</oaei.mainClass>
 
-        <oaei.copyright>(C) Jan Portisch, 2020
-        </oaei.copyright> <!--optional copyright appearing in the seals descriptor file -->
-        <oaei.license>GNU Lesser General Public License 2.1 or above
-        </oaei.license> <!--optional license appearing in the seals descriptor file -->
-
         <maven.deploy.skip>true
         </maven.deploy.skip><!-- needed to call mvn deploy without having a distributionManagement -->
-        <matching.version>2.6-SNAPSHOT</matching.version> <!-- version for all matching related packages -->
+        <matching.version>3.1</matching.version> <!-- version for all matching related packages -->
     </properties>
 
     <!-- Accessing the resources:
@@ -51,27 +45,35 @@
             <version>${matching.version}</version>
         </dependency>
 
+        <!-- This dependency is necessary for web submission. It contains the server wrapper. -->
+        <dependency>
+            <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
+            <artifactId>receiver-http</artifactId>
+            <version>${matching.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
             <artifactId>matching-eval</artifactId>
             <version>${matching.version}</version>
-            <!--<scope>test</scope>-->
-            <!-- only in test scope, can only be used when running tests.
-                 You can also remove the scope but then remove the whole dependency when packaging the matcher.
-                 Otherwise you get a lot of unused dependencies in your matcher.-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.docker-java</groupId>
+            <artifactId>docker-java-core</artifactId>
+            <version>3.2.7</version><!--maybe update version-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.docker-java</groupId>
+            <artifactId>docker-java-transport-httpclient5</artifactId>
+            <version>3.2.7</version><!--maybe update version-->
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>1.5</version>
-        </dependency>
-
-        <!-- This dependency is necessary for hobbit submission. It contains the wrapper. -->
-        <dependency>
-            <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
-            <artifactId>hobbit-wrapper</artifactId>
-            <version>${matching.version}</version>
         </dependency>
 
         <dependency>
@@ -109,80 +111,49 @@
 
     <build>
         <plugins>
-
-            <!-- the following plugin will generate a seals assembly -->
-
+            <!-- the following plugin will generate a docker image and save it into the target folder -->
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.36.0</version>
+                <configuration>
+                    <!-- further machine configuration options: https://dmp.fabric8.io/#docker-machine
+                         Use the following line in case you have installed docker on windows or mac
+                    <machine><name>default</name></machine>
+                    -->
+                    <images>
+                        <image>
+                            <name>alod2vecmatcher-1.0-web</name>
+                            <build>
+                                <from>openjdk:8-jre-alpine</from><!--change it to a docker base image you want - this is just a small image which contains java-->
+                                <assembly><descriptorRef>web</descriptorRef></assembly>
+                                <cmd><shell>java -cp "${project.build.finalName}.${project.packaging}:lib/*" de.uni_mannheim.informatik.dws.melt.receiver_http.Main</shell></cmd>
+                                <workdir>/maven</workdir>
+                                <ports><port>8080</port></ports><!--port exposure to specify on which port the server runs -->
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
-                        <artifactId>seals-assembly</artifactId>
+                        <artifactId>matching-assembly</artifactId>
                         <version>${matching.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
                     <execution>
-                        <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>build</goal>
+                            <goal>save</goal>
                         </goals>
-                        <!--
-                        there exists three descriptors:
-                        1) "seals" - removes all dependencies available in seals client regardless of their version.
-                        2) "seals_all_deps" - adds all dependencies of your project (please note that this can cause
-                        problems when using jena for example)
-                        3) "seals_external" - creates a wrapper around the matcher so that no inference with seals
-                        happens (the matcher has to log to std err only).
-                        -->
-                        <configuration>
-                            <descriptorRefs>
-                                <descriptorRef>seals_external</descriptorRef>
-                            </descriptorRefs>
-                        </configuration>
+                        <!--execute build and save when calling "mvn install" -->
+                        <phase>install</phase>
                     </execution>
                 </executions>
             </plugin>
 
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
-            </plugin>
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>maven.mannheim.releases</id>
-            <url>https://breda.informatik.uni-mannheim.de/nexus/content/repositories/releases</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven.mannheim.releases</id>
-            <url>https://breda.informatik.uni-mannheim.de/nexus/content/repositories/releases</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>
-
-        <!-- config example for settings file which is usually located at ~/.m2/settings.xml (you can create the file if it does not exist)
-             username and password are used for pushing the docker image and privateKey is necessary for creating gitlab projects and system.ttl files:
-        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
-          <servers>
-            <server>
-              <id>git.project-hobbit.eu</id>
-              <username>{username}</username>
-              <password>{password}</password>
-              <privateKey>{gitlab_access_token}</privateKey>
-            </server>
-          </servers>
-        </settings>
-        -->

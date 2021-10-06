@@ -45,6 +45,19 @@
             <version>${matching.version}</version>
         </dependency>
 
+        <!-- dependency for kgvec2go -->
+        <dependency>
+            <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
+            <artifactId>matching-jena-matchers</artifactId>
+            <version>${matching.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.gradoop.famer</groupId>
+                    <artifactId>famer-clustering</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- This dependency is necessary for web submission. It contains the server wrapper. -->
         <dependency>
             <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
@@ -56,6 +69,7 @@
             <groupId>de.uni-mannheim.informatik.dws.melt</groupId>
             <artifactId>matching-eval</artifactId>
             <version>${matching.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

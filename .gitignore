@@ -101,6 +101,5 @@ ParameterTuningPlayground.java
 SealsPlayground.java
 /results/*
 /sealsResults/*
-oaei-resources/*
 *.log
 *.out

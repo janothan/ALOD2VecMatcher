@@ -95,7 +95,6 @@ nb-configuration.xml
 ##############################
 Playground.java
 EvaluationPlayground.java
-oaei-resources
 evaluation.EvaluationPlayground.java
 ParameterTuningPlayground.java
 SealsPlayground.java
